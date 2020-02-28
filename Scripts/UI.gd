@@ -5,6 +5,8 @@ func _set_score(txt):
 	
 func _game_over():
 	$GameOver.visible = true
+	$BestScore.visible = true
+	$BestScore.text += str(Singleton.best_score)
 
 func _on_GameOver_pressed():
 	get_tree().paused = false

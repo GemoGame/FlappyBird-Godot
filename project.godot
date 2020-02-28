@@ -19,6 +19,11 @@ config/name="FlappyBird-Godot"
 run/main_scene="res://Scenes/Menu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Singleton="*res://Singleton/Singleton.gd"
+Sound="*res://Scenes/Sound.tscn"
+
 [display]
 
 window/size/width=288
