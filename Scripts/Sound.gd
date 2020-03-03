@@ -1,9 +1,22 @@
 extends Node
 
-func play_audio(audio_name):
-	if audio_name == "die":
-		$DieAudio.play()
-	elif audio_name == "flap":
-		$FlapAudio.play()
-	elif audio_name == "point":
-		$PointAudio.play()
+var audio_list = {
+	"die"	: preload("res://Assets/Sounds/die.ogg"),
+	"point"	: preload("res://Assets/Sounds/point.ogg"),
+	"flap"	: preload("res://Assets/Sounds/swoosh.ogg")
+}
+
+func play(audio):
+	var temp_res = audio_list.get(audio)
+	if temp_res == null:
+		return
+		
+	for audio_channel in get_children():
+		if audio_channel.stream == temp_res:
+			audio_channel.play()
+			return
+		
+		if !audio_channel.playing:
+			audio_channel.stream = temp_res
+			audio_channel.play()
+			return

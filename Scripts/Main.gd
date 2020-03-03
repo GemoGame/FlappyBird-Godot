@@ -24,16 +24,17 @@ func _on_Timer_timeout():
 	_spawn_pipe()
 
 func forward_point_signal():
+	Sound.play("point")
 	$UI._set_score(Singleton._get_score())
 	pass
 
 func _on_Bird_flap():
-	Sound.play_audio("flap")
+	Sound.play("flap")
 	pass # Replace with function body.
 
 
 func _on_Bird_dead():
-	Sound.play_audio("die")
+	Sound.play("die")
 	Singleton._add_record()
 	Singleton._reset_score()
 	$UI._game_over()

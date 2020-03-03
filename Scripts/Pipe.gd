@@ -17,5 +17,4 @@ func _process(delta):
 
 func _on_WayPoint_body_entered(body):
 		Singleton._add_score()
-		Sound.play_audio("point")
 		emit_signal("point")
