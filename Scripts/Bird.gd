@@ -28,8 +28,9 @@ func _process(delta):
 		get_tree().paused = true
 
 func _flap():
-	velocity = FLAP
-	emit_signal("flap") # mentransmit signal ke node yang sudah diatur tujuannya
+	if position.y >= 20:
+		velocity = FLAP
+		emit_signal("flap") # mentransmit signal ke node yang sudah diatur tujuannya
 	
 func _get_collosion(): #mengembalikan data objek yang collide dengan Bird
 	if collosion != null:
