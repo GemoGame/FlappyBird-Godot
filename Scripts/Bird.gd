@@ -23,7 +23,7 @@ func _process(delta):
 		emit_signal("dead")
 
 func _move(velocity,delta):
-	move_and_collide(FORWARD * delta)
+	collosion = move_and_collide(FORWARD * delta, false)
 	if position.x <= -20:
 		queue_free()
 
@@ -38,3 +38,6 @@ func _flap():
 	if position.y >= 20:
 		velocity = FLAP
 		emit_signal("flap") # mentransmit signal ke node yang sudah diatur tujuannya
+
+func _add_speed(speed):
+	FORWARD += speed

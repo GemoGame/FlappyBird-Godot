@@ -6,12 +6,14 @@ signal point
 
 func _ready():
 	randomize()
+	$Pipe._place_pipe(Vector2(50,30),30)
+	$Pipe.connect("point",self,"forward_point_signal")
 
 func _spawn_bird():
 	var rand_y = randi()%240+1 + 144
 	var bird = bird_scn.instance()
 	bird._initiate_bird(Vector2(300,rand_y))
-	bird.connect("dead",self,"_on_Bird_dead")
+	bird.connect("dead",self,"Bird_dead")
 	$GeneratedBird.add_child(bird)
 
 func _on_Timer_timeout():
@@ -24,9 +26,10 @@ func forward_point_signal():
 	pass
 
 
-func _on_Bird_dead():
+func Bird_dead():
 	Sound.play("die")
 	Singleton._add_record()
 	Singleton._reset_score()
 	$UI._game_over()
+	get_tree().paused = true
 	pass # Replace with function body.
