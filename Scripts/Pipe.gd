@@ -8,12 +8,15 @@ func _place_pipe(pos, gap):
 	$LowerPipe.position.y += (gap/2)
 
 func _process(delta):
-	$UpperPipe.move_and_collide(Vector2(-100,0) * delta)
-	$LowerPipe.move_and_collide(Vector2(-100,0) * delta)
-	$WayPoint.position.x += -100 * delta
-	if position.x < -30:
-		queue_free()
+#	$UpperPipe.move_and_collide(Vector2(-100,0) * delta)
+#	$LowerPipe.move_and_collide(Vector2(-100,0) * delta)
+#	$WayPoint.position.x += -100 * delta
+#	if position.x < -30:
+#		queue_free()
+	pass
 
+func _move_pipe():
+	pass
 
 func _on_WayPoint_body_entered(body):
 		Singleton._add_score()

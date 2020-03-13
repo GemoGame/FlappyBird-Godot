@@ -2,36 +2,39 @@ extends KinematicBody2D
 
 const GRAVITY 	= 9.8 * Vector2.DOWN # Kecepatan Gravitasi
 const FLAP		= 3 * Vector2.UP # Kecepatan Bird saat dalam keadaan "flap"
+var FORWARD = Vector2()
 var velocity = Vector2()
 var collosion
 var is_dead = false
 
-
-signal flap()
 signal dead()
 
-func _initiate_bird():
-	position = Vector2(30,288/2)
+func _initiate_bird(pos):
+	position = pos
 	
 func _ready():
-	_initiate_bird() # menginisiasi posisi awal agar Bird berada dalam kondisi yang tepat
+	$AnimatedSprite.flip_h = true
+	randomize()
+	FORWARD = (randi()%150+1 + 150) * Vector2.LEFT
 	
 func _process(delta):
-	velocity += GRAVITY * delta
-	collosion = move_and_collide(velocity)
-	if Input.is_action_just_pressed("left_click") and !is_dead:
-		_flap() # memanggil fungsi flap sehingga Bird akan bergerak dalam keadaan "flap"
-		#Bird akan mati apa bila mengenai objek yang dapat collide (disini ada ground dan pipe)
-	if collosion != null && !is_dead:
-		is_dead = true
-		emit_signal("dead") # mentransmit signal ke node yang sudah diatur tujuannya
-		get_tree().paused = true
+	_move(FORWARD,delta)
+	if collosion != null:
+		emit_signal("dead")
+
+func _move(velocity,delta):
+	move_and_collide(FORWARD * delta)
+	if position.x <= -20:
+		queue_free()
+
+func _random_flap():
+	var flap_chance = randi()%101+1
+	if flap_chance >= 85:
+		_flap()
+	elif position.y >= 360:
+		_flap()
 
 func _flap():
 	if position.y >= 20:
 		velocity = FLAP
 		emit_signal("flap") # mentransmit signal ke node yang sudah diatur tujuannya
-	
-func _get_collosion(): #mengembalikan data objek yang collide dengan Bird
-	if collosion != null:
-		return collosion
